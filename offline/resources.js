@@ -1,4 +1,4 @@
-/* Do Nothing v5.1 offline: lets the pages run from plain files (no server, no network). */
+/* Lets the pages run from plain files: React from this folder, every screen's source in memory. */
 window.__resources = {
  "https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js": "offline/react.js",
  "https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js": "offline/react-dom.js"
