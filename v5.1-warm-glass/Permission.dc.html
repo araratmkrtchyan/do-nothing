@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — Notifications explainer</title>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" data-style="{{dnStyle}}" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accent}}" style="position: relative; width: 390px; height: 844px; box-sizing: border-box; color: var(--text-primary); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden">
+<sc-if value="{{solid}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: var(--background-primary)"></div>
+</sc-if>
+<div aria-hidden="true" class="{{cls.scrim}}" style="position: absolute; inset: 0; background: var(--static-black); opacity: 0.5"></div>
+<div role="dialog" aria-labelledby="perm-title" class="{{cls.sheet}}" style="position: relative; background: var(--background-primary); border-radius: 32px 32px 0 0; overflow: hidden">
+<div style="background: var(--background-secondary); padding: 12px 24px 40px 24px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div aria-hidden="true" style="width: 36px; height: 5px; border-radius: 9999px; background: var(--separator)"></div>
+<div aria-hidden="true" style="margin-top: 32px; width: 64px; height: 64px; border-radius: 9999px; background: var(--background-tertiary); display: flex; align-items: center; justify-content: center">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a2 2 0 0 0 3.4 0"></path></svg>
+</div>
+<h1 id="perm-title" style="margin: 24px 0 0 0; font-size: 22px; line-height: 28px; font-weight: 600">{{t.title}}</h1>
+<p style="margin: 8px 0 0 0; font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.body}}</p>
+<a href="{{sessionHref}}" onClick="{{nav}}" style="margin-top: 32px; width: 100%; min-height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 30px; background: var(--accent); color: var(--on-accent); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 700">{{t.cont}}</a>
+<a href="{{sessionHref}}" onClick="{{navDecline}}" style="margin-top: 12px; min-height: 44px; padding: 0 16px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 17px; line-height: 22px; font-weight: 600; color: var(--accent-text)">{{t.notNow}}</a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"warm"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"go":{"editor":null},"overlay":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+/* Strings from the Do Nothing translations table. Generated, edit the table instead. */
+dnT(k, v){ const T = {"perm_body":{"en":"So you can stop watching the clock. Next, iOS will ask if that’s OK.","hy":"Որ ժամացույցին նայելու կարիք չլինի։ Հետո iOS-ը կհարցնի՝ համաձայն ես։","ru":"Чтобы не следить за часами. Дальше iOS спросит, можно ли."},"perm_continue":{"en":"Continue","hy":"Շարունակել","ru":"Продолжить"},"perm_not_now":{"en":"Not now","hy":"Ոչ հիմա","ru":"Не сейчас"},"perm_title":{"en":"One notification, at the end","hy":"Մեկ ծանուցում՝ վերջում","ru":"Одно уведомление — в конце"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
+renderVals() {
+const dark = this.props.dark ?? true;
+const go = this.props.go;
+const T = (k, v) => this.dnT(k, v);
+return { dnStyle: this.props.variant || 'warm',
+lang: this.props.lang || 'en',
+mode: dark ? 'dark' : 'light',
+accent: this.props.accent || 'orange',
+solid: !this.props.overlay,
+cls: this.props.overlay ? { scrim: 'dn-scrim-in', sheet: 'dn-rise' } : { scrim: '', sheet: '' },
+t: { title: T('perm_title'), body: T('perm_body'), cont: T('perm_continue'), notNow: T('perm_not_now') },
+sessionHref: dark ? 'Session.dc.html' : 'SessionLight.dc.html',
+nav: (e) => { if (go) { e.preventDefault(); go('session'); } },
+navDecline: (e) => { if (go) { e.preventDefault(); go('decline'); } }
+};
+}
+}
+</script>
+</body>
+</html>

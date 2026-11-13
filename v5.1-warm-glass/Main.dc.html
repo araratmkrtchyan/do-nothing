@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — Start</title>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" data-style="{{dnStyle}}" data-purpose="{{dnPurpose}}" data-screen="start" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accent}}" style="width: 390px; height: 844px; box-sizing: border-box; background: var(--background-primary); color: var(--text-primary); display: flex; flex-direction: column; padding: 60px 20px 40px 20px">
+<div class="dn-photos" aria-hidden="true"><i data-p="relax"></i><i data-p="reload"></i><i data-p="think"></i><i data-p="coffee"></i><i data-p="pause"></i></div>
+<div style="height: 44px; display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 17px; line-height: 22px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" style="fill: var(--accent)"><path d="M13.5 2L4 13.5h6.5L9.5 22 20 9.5h-6.5L13.5 2z"></path></svg>{{t.app}}</div>
+<a href="{{to.settings}}" onClick="{{nav.settings}}" aria-label="{{t.settings}}" style="width: 44px; height: 44px; margin-right: -12px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; color: var(--text-primary)">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
+</a>
+</div>
+<sc-if value="{{notifOff}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="margin-top: 12px; padding: 16px; border-radius: 16px; background: var(--background-secondary); display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 20px">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M18 8a6 6 0 0 0-9.3-5M6 8c0 7-3 9-3 9h13M10.3 21a2 2 0 0 0 3.4 0"></path><path d="M3 3l18 18"></path></svg>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<span>{{t.notifOff}}</span>
+<a href="{{to.settings}}" onClick="{{nav.settings}}" style="min-height: 44px; display: flex; align-items: center; font-size: 17px; font-weight: 600; color: var(--accent-text); text-decoration: none">{{t.openSettings}}</a>
+</div>
+</div>
+</sc-if>
+<div role="group" aria-label="{{t.purposeGroup}}" style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px">
+<div aria-hidden="true" style="font-size: 22px; line-height: 28px; font-weight: 600">{{t.just}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<sc-for list="{{purposes}}" as="p" hint-placeholder-count="5">
+<button onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="{{p.style}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+<div role="group" aria-label="{{t.timeTitle}}" style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 22px; line-height: 28px; font-weight: 600">{{t.timeTitle}}</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{times}}" as="m" hint-placeholder-count="4">
+<button onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="{{m.style}}">{{m.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{timeHint}}</div>
+</div>
+<div style="margin-top: 20px; padding: 16px; border-radius: 16px; background: var(--background-secondary); display: flex; align-items: center; justify-content: space-between">
+<button onClick="{{minus}}" disabled="{{atMin}}" aria-label="{{t.less}}" style="width: 44px; height: 44px; border-radius: 9999px; border: 1px solid var(--control-border); background: transparent; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"></path></svg>
+</button>
+<div role="status" aria-label="{{minsLabel}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-size: 56px; line-height: 1; font-weight: 300; font-variant-numeric: tabular-nums">{{mins}}</span>
+<span style="font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.unit}}</span>
+</div>
+<button onClick="{{plus}}" disabled="{{atMax}}" aria-label="{{t.more}}" style="width: 44px; height: 44px; border-radius: 9999px; border: 1px solid var(--control-border); background: transparent; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M12 5v14"></path></svg>
+</button>
+</div>
+<p style="margin: 8px 0 0 0; font-size: 13px; line-height: 18px; text-align: center; color: var(--text-secondary)">{{t.available}}</p>
+<div style="flex-grow: 1"></div>
+<sc-if value="{{focusTip}}" hint-placeholder-val="{{ true }}">
+<div style="margin-bottom: 12px; padding: 4px 4px 4px 16px; border-radius: 16px; background: var(--background-secondary); display: flex; align-items: center; gap: 12px; font-size: 15px; line-height: 20px">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+<span style="flex-grow: 1; padding: 12px 0">{{t.tip}}</span>
+<button onClick="{{closeTip}}" aria-label="{{t.hideTip}}" style="width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</div>
+</sc-if>
+<a href="{{to.start}}" onClick="{{nav.start}}" style="height: 60px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 30px; background: var(--accent); color: var(--on-accent); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 700">{{t.cta}}</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"warm"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"notificationsOff":{"editor":"boolean","default":false},"focusTip":{"editor":"boolean","default":true},"go":{"editor":null},"onChoose":{"editor":null},"purpose":{"editor":null},"mins":{"editor":null},"last":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(p){ super(p); this.state = { purpose: p.purpose || 'relax', mins: p.mins || 20, last: p.last || { relax: 20, reload: 10, think: 10, coffee: 15, pause: 10 }, tipClosed: false }; }
+/* Strings from the Do Nothing translations table. Generated, edit the table instead. */
+dnT(k, v){ const T = {"app_name":{"en":"Do Nothing","hy":"Do Nothing","ru":"Do Nothing"},"common_open_settings":{"en":"Open Settings","hy":"Բացել Կարգավորումները","ru":"Открыть Настройки"},"common_settings":{"en":"Settings","hy":"Կարգավորումներ","ru":"Настройки"},"hint_coffee":{"en":"About as long as a cup.","hy":"Մոտավորապես մեկ բաժակի չափ։","ru":"Примерно на одну чашку."},"hint_pause":{"en":"No reason needed.","hy":"Պատճառ պետք չէ։","ru":"Причина не нужна."},"hint_relax":{"en":"Longer times, for real rest.","hy":"Ավելի երկար՝ իսկական հանգստի համար։","ru":"Подольше — для настоящего отдыха."},"hint_reload":{"en":"Short resets, to get back to it.","hy":"Կարճ դադարներ՝ շուտ վերադառնալու համար։","ru":"Короткие паузы, чтобы вернуться к делам."},"hint_think":{"en":"Enough time for thoughts to settle.","hy":"Մտքերը դասավորելու համար։","ru":"Достаточно, чтобы мысли улеглись."},"purpose_coffee":{"en":"Coffee or a quiet moment","hy":"Սուրճ կամ լռություն","ru":"Кофе или минутка тишины"},"purpose_pause":{"en":"A pause","hy":"Դադար","ru":"Пауза"},"purpose_relax":{"en":"Relax","hy":"Հանգստանալ","ru":"Отдохнуть"},"purpose_reload":{"en":"Reload","hy":"Լիցքավորվել","ru":"Перезагрузиться"},"purpose_think":{"en":"Stop overthinking","hy":"Բաց թողնել մտքերը","ru":"Отпустить мысли"},"start_available":{"en":"Your time available. Change it freely.","hy":"Քո ազատ ժամանակը։ Փոխիր՝ ինչպես ուզում ես։","ru":"Твоё свободное время. Меняй как хочешь."},"start_cta":{"en":"Do nothing","hy":"Ոչինչ չանել","ru":"Ничего не делать"},"start_focus_tip":{"en":"Tip: a Focus quiets other apps. Allow Do Nothing in it (Settings › Focus), or it can hold the end back.","hy":"Խորհուրդ․ Focus-ը լռեցնում է մյուս հավելվածները։ Ավելացրու Do Nothing-ը այդ ցուցակում (Settings › Focus), անխափան աշխատանքի համար","ru":"Совет: фокусирование приглушает другие приложения. Разреши в нём Do Nothing (Настройки › Фокусирование), иначе оно может задержать уведомление об окончании."},"start_hide_tip":{"en":"Hide tip","hy":"Թաքցնել խորհուրդը","ru":"Скрыть совет"},"start_just":{"en":"Just","hy":"Պարզապես","ru":"Просто"},"start_less":{"en":"One minute less","hy":"Մեկ րոպե պակաս","ru":"На минуту меньше"},"start_more":{"en":"One minute more","hy":"Մեկ րոպե ավելի","ru":"На минуту больше"},"start_notif_off":{"en":"Notifications are off, so you’ll only see the end with the app open.","hy":"Ծանուցումներն անջատված են, ուստի ավարտը կտեսնես միայն բաց հավելվածում։","ru":"Уведомления выключены, поэтому конец будет виден только в открытом приложении."},"start_purpose_group":{"en":"What is it for?","hy":"Ինչի՞ համար է","ru":"Для чего это?"},"start_time_title":{"en":"How much time do you have?","hy":"Որքա՞ն ժամանակ ունես","ru":"Сколько у тебя времени?"},"unit_hour_chip":{"en":"1 hour","hy":"1 ժամ","ru":"1 час"},"unit_min":{"en":"min","hy":"րոպե","ru":"мин"},"unit_min_chip":{"en":"{n} min","hy":"{n} ր","ru":"{n} мин"},"unit_minute_few":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минуты"},"unit_minute_many":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минут"},"unit_minute_one":{"en":"{n} minute","hy":"{n} րոպե","ru":"{n} минута"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
+renderVals() {
+const dark = this.props.dark ?? true;
+const s = this.state;
+const go = this.props.go;
+const T = (k, v) => this.dnT(k, v);
+const choice = { purpose: s.purpose, mins: s.mins, last: s.last };
+const nav = (k) => (e) => { if (go) { e.preventDefault(); if (k === 'start' && this.props.onChoose) this.props.onChoose(choice); go(k, choice); } };
+const chip = (on, extra) => 'min-height: 44px; padding: 0 16px; border: 0; border-radius: 22px; font-family: inherit; font-size: 16px; line-height: 21px; font-weight: 600; cursor: pointer; ' + (extra || '') + (on ? 'background: var(--accent); color: var(--on-accent)' : 'background: var(--background-secondary); color: var(--text-primary)');
+const purposes = [['relax', 'purpose_relax'], ['reload', 'purpose_reload'], ['think', 'purpose_think'], ['coffee', 'purpose_coffee'], ['pause', 'purpose_pause']];
+const sets = { relax: [10, 20, 30, 60], reload: [2, 5, 10, 15], think: [5, 10, 20, 30], coffee: [5, 10, 15, 20], pause: [2, 10, 30, 60] };
+const hints = { relax: 'hint_relax', reload: 'hint_reload', think: 'hint_think', coffee: 'hint_coffee', pause: 'hint_pause' };
+const set = (m) => { const v = Math.max(1, Math.min(240, m)); this.setState({ mins: v, last: { ...s.last, [s.purpose]: v } }); };
+return { dnStyle: this.props.variant || 'warm', dnPurpose: this.state.purpose || 'relax',
+lang: this.props.lang || 'en',
+mode: dark ? 'dark' : 'light',
+accent: this.props.accent || 'orange',
+t: { app: T('app_name'), settings: T('common_settings'), notifOff: T('start_notif_off'), openSettings: T('common_open_settings'), purposeGroup: T('start_purpose_group'), just: T('start_just'), timeTitle: T('start_time_title'), less: T('start_less'), more: T('start_more'), unit: T('unit_min'), available: T('start_available'), tip: T('start_focus_tip'), hideTip: T('start_hide_tip'), cta: T('start_cta') },
+nav: { settings: nav('settings'), start: nav('start') },
+to: dark ? { settings: 'Settings.dc.html', start: 'Permission.dc.html' } : { settings: 'SettingsLight.dc.html', start: 'PermissionLight.dc.html' },
+notifOff: this.props.notificationsOff ?? false,
+focusTip: (this.props.focusTip ?? true) && !s.tipClosed,
+closeTip: () => this.setState({ tipClosed: true }),
+purposes: purposes.map(([id, key]) => { const on = s.purpose === id; return { label: T(key), on, pick: () => this.setState({ purpose: id, mins: s.last[id] }), style: chip(on) }; }),
+times: sets[s.purpose].map((m) => { const on = s.mins === m; return { label: m >= 60 ? T('unit_hour_chip') : T('unit_min_chip', { n: m }), on, pick: () => set(m), style: chip(on, 'padding: 0 4px; ') }; }),
+timeHint: T(hints[s.purpose]),
+mins: s.mins,
+minsLabel: this.dnMin(s.mins),
+atMin: s.mins <= 1,
+atMax: s.mins >= 240,
+minus: () => set(s.mins - 1),
+plus: () => set(s.mins + 1)
+};
+}
+}
+</script>
+</body>
+</html>
