@@ -1,0 +1,85 @@
+/* Do Nothing v5 — roles from DESIGN.md (2026-11-08). Screens use only these variables, never hex. */
+.dn {
+  --static-white: #FFFFFF;
+  --static-black: #000000;
+  --accent-orange: #F5821E; --accent-orange-700: #B35400;
+  --accent-teal: #26A69A; --accent-teal-700: #0F7A6E;
+  --accent-lavender: #9B8AE6; --accent-lavender-700: #6A55C9;
+  --accent-rose: #E5708B; --accent-rose-700: #B23E5B;
+  --accent: var(--accent-orange); --accent-700: var(--accent-orange-700);
+  --on-accent: var(--static-black);
+  --session-background: #0C0D0E;
+  --session-text: #FFFFFF99;
+  --session-time: #FFFFFFB3;
+  --session-time-paused: #FFFFFF80;
+  --session-control-background: #FFFFFF0D;
+  --session-control-border: #FFFFFF1A;
+  --session-control-text: #FFFFFFCC;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Armenian", system-ui, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.dn[data-accent="teal"] { --accent: var(--accent-teal); --accent-700: var(--accent-teal-700); }
+.dn[data-accent="lavender"] { --accent: var(--accent-lavender); --accent-700: var(--accent-lavender-700); }
+.dn[data-accent="rose"] { --accent: var(--accent-rose); --accent-700: var(--accent-rose-700); }
+
+.dn[data-mode="dark"] {
+  color-scheme: dark;
+  --background-primary: #131416;
+  --background-secondary: #FFFFFF0D;
+  --background-tertiary: #FFFFFF1A;
+  --separator: #FFFFFF33;
+  --fill: #FFFFFF1A;
+  --control-border: #FFFFFF66;
+  --control-fill: #FFFFFF66;
+  --text-primary: #FFFFFFE6;
+  --text-secondary: #FFFFFFB3;
+  --text-tertiary: #FFFFFF99;
+  --text-quaternary: #FFFFFF66;
+  --accent-text: var(--accent);
+  --settings-bg: #0C0D0E;
+}
+.dn[data-mode="light"] {
+  color-scheme: light;
+  --background-primary: #F4F3F1;
+  --background-secondary: #FFFFFF;
+  --background-tertiary: #0000000D;
+  --separator: #0000001A;
+  --fill: #0000001A;
+  --control-border: #00000080;
+  --control-fill: #0000001A;
+  --text-primary: #000000E6;
+  --text-secondary: #000000B3;
+  --text-tertiary: #00000099;
+  --text-quaternary: #00000066;
+  --accent-text: var(--accent-700);
+  --on-accent: var(--static-white); /* owner's choice 2026-11-13: white on the accent in light (DESIGN.md open decision 21) */
+  --settings-bg: #F4F3F1;
+}
+
+/* States (DESIGN.md › States): pressed 85%, disabled 40%, focus 2px accent outline 2px away. No hover on iPhone. */
+.dn button, .dn a { -webkit-tap-highlight-color: transparent; }
+.dn button:active:not(:disabled), .dn a:active { opacity: 0.85; }
+.dn button:disabled { opacity: 0.4; cursor: default; }
+.dn :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dn .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Motion (DESIGN.md › Motion). iOS uses the system push, sheet and alert; mockups draw them with a smooth spring
+   approximation: 0.5 s, no bounce. A root change is a 0.3 s crossfade. Reduce Motion: a 0.2 s crossfade. */
+.dn { --dn-ease: cubic-bezier(0.25, 1, 0.5, 1); }
+@keyframes dn-rise { from { transform: translateY(100%); } }
+@keyframes dn-drop { to { transform: translateY(100%); } }
+@keyframes dn-fade-in { from { opacity: 0; } }
+@keyframes dn-fade-out { to { opacity: 0; } }
+.dn-layer { position: absolute; inset: 0; }
+.dn-rise { animation: dn-rise 0.5s var(--dn-ease) both; }
+.dn-drop { animation: dn-drop 0.5s var(--dn-ease) both; }
+.dn-cross { animation: dn-fade-in 0.3s ease-out both; }
+.dn-scrim-in { animation: dn-fade-in 0.5s var(--dn-ease) both; }
+.dn-pane { transition: transform 0.5s var(--dn-ease), filter 0.5s var(--dn-ease); }
+@media (prefers-reduced-motion: reduce) {
+  .dn-rise, .dn-cross, .dn-scrim-in { animation: dn-fade-in 0.2s linear both; }
+  .dn-drop { animation: dn-fade-out 0.2s linear both; }
+  .dn-pane { transform: none !important; filter: none !important; transition: opacity 0.2s linear; }
+  .dn-pane[aria-hidden="true"] { opacity: 0; pointer-events: none; }
+}

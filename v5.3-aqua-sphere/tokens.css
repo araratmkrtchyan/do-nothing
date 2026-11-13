@@ -1,0 +1,152 @@
+/* Do Nothing v5 — roles from DESIGN.md (2026-11-08). Screens use only these variables, never hex. */
+.dn {
+  --static-white: #FFFFFF;
+  --static-black: #000000;
+  --accent-orange: #F5821E; --accent-orange-700: #B35400;
+  --accent-teal: #26A69A; --accent-teal-700: #0F7A6E;
+  --accent-lavender: #9B8AE6; --accent-lavender-700: #6A55C9;
+  --accent-rose: #E5708B; --accent-rose-700: #B23E5B;
+  --accent: var(--accent-orange); --accent-700: var(--accent-orange-700);
+  --on-accent: var(--static-black);
+  --session-background: #0C0D0E;
+  --session-text: #FFFFFF99;
+  --session-time: #FFFFFFB3;
+  --session-time-paused: #FFFFFF80;
+  --session-control-background: #FFFFFF0D;
+  --session-control-border: #FFFFFF1A;
+  --session-control-text: #FFFFFFCC;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Armenian", system-ui, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.dn[data-accent="teal"] { --accent: var(--accent-teal); --accent-700: var(--accent-teal-700); }
+.dn[data-accent="lavender"] { --accent: var(--accent-lavender); --accent-700: var(--accent-lavender-700); }
+.dn[data-accent="rose"] { --accent: var(--accent-rose); --accent-700: var(--accent-rose-700); }
+
+.dn[data-mode="dark"] {
+  color-scheme: dark;
+  --background-primary: #131416;
+  --background-secondary: #FFFFFF0D;
+  --background-tertiary: #FFFFFF1A;
+  --separator: #FFFFFF33;
+  --fill: #FFFFFF1A;
+  --control-border: #FFFFFF66;
+  --control-fill: #FFFFFF66;
+  --text-primary: #FFFFFFE6;
+  --text-secondary: #FFFFFFB3;
+  --text-tertiary: #FFFFFF99;
+  --text-quaternary: #FFFFFF66;
+  --accent-text: var(--accent);
+  --settings-bg: #0C0D0E;
+}
+.dn[data-mode="light"] {
+  color-scheme: light;
+  --background-primary: #F4F3F1;
+  --background-secondary: #FFFFFF;
+  --background-tertiary: #0000000D;
+  --separator: #0000001A;
+  --fill: #0000001A;
+  --control-border: #00000080;
+  --control-fill: #0000001A;
+  --text-primary: #000000E6;
+  --text-secondary: #000000B3;
+  --text-tertiary: #00000099;
+  --text-quaternary: #00000066;
+  --accent-text: var(--accent-700);
+  --on-accent: var(--static-white); /* owner's choice 2026-11-13: white on the accent in light (DESIGN.md open decision 21) */
+  --settings-bg: #F4F3F1;
+}
+
+/* States (DESIGN.md › States): pressed 85%, disabled 40%, focus 2px accent outline 2px away. No hover on iPhone. */
+.dn button, .dn a { -webkit-tap-highlight-color: transparent; }
+.dn button:active:not(:disabled), .dn a:active { opacity: 0.85; }
+.dn button:disabled { opacity: 0.4; cursor: default; }
+.dn :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dn .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Motion (DESIGN.md › Motion). iOS uses the system push, sheet and alert; mockups draw them with a smooth spring
+   approximation: 0.5 s, no bounce. A root change is a 0.3 s crossfade. Reduce Motion: a 0.2 s crossfade. */
+.dn { --dn-ease: cubic-bezier(0.25, 1, 0.5, 1); }
+@keyframes dn-rise { from { transform: translateY(100%); } }
+@keyframes dn-drop { to { transform: translateY(100%); } }
+@keyframes dn-fade-in { from { opacity: 0; } }
+@keyframes dn-fade-out { to { opacity: 0; } }
+.dn-layer { position: absolute; inset: 0; }
+.dn-rise { animation: dn-rise 0.5s var(--dn-ease) both; }
+.dn-drop { animation: dn-drop 0.5s var(--dn-ease) both; }
+.dn-cross { animation: dn-fade-in 0.3s ease-out both; }
+.dn-scrim-in { animation: dn-fade-in 0.5s var(--dn-ease) both; }
+.dn-pane { transition: transform 0.5s var(--dn-ease), filter 0.5s var(--dn-ease); }
+@media (prefers-reduced-motion: reduce) {
+  .dn-rise, .dn-cross, .dn-scrim-in { animation: dn-fade-in 0.2s linear both; }
+  .dn-drop { animation: dn-fade-out 0.2s linear both; }
+  .dn-pane { transform: none !important; filter: none !important; transition: opacity 0.2s linear; }
+  .dn-pane[aria-hidden="true"] { opacity: 0; pointer-events: none; }
+}
+
+/* ===== Style variants (DESIGN.md › Variants, proposed 2026-11-13) =====
+   Each screen takes data-style = default | warm | lime | aqua. Everything below is scoped to one style, so the
+   original style above is unchanged. A style replaces the orange accent only; teal, lavender and rose stay
+   choosable in Settings. Generated from DESIGN.md values, edit DESIGN.md first. */
+.dn[data-style="warm"] { --session-background:#0E0908;--session-text:#FBF4F199;--session-time:#FBF4F1B3;--session-time-paused:#FBF4F180;--session-control-background:#FBF4F11A;--session-control-border:#FBF4F129;--session-control-text:#FBF4F1CC; }
+.dn[data-style="warm"][data-mode="dark"] { --background-primary:#17110F;--background-secondary:#FBF4F11A;--background-tertiary:#FBF4F11A;--separator:#FBF4F133;--fill:#FBF4F11A;--control-border:#FBF4F166;--control-fill:#FBF4F166;--text-primary:#FBF4F1E6;--text-secondary:#FBF4F1B3;--text-tertiary:#FBF4F199;--text-quaternary:#FBF4F166;--settings-bg:#0E0908; }
+.dn[data-style="warm"][data-mode="light"] { --background-primary:#F3ECE9;--background-secondary:#FFFFFF99;--background-tertiary:#1E14120D;--separator:#1E14121A;--fill:#1E14121A;--control-border:#1E141280;--control-fill:#1E14121A;--text-primary:#1E1412E6;--text-secondary:#1E1412B3;--text-tertiary:#1E141299;--text-quaternary:#1E141266;--settings-bg:#F3ECE9; }
+.dn[data-style="warm"][data-mode="dark"][data-accent="orange"] { --accent:#F07A3A;--accent-text:#F07A3A;--on-accent:#000000; }
+.dn[data-style="warm"][data-mode="light"][data-accent="orange"] { --accent:#F07A3A;--accent-text:#A63E2E;--on-accent:#FFFFFF; }
+.dn[data-style="warm"][data-mode="dark"][data-screen="session"][data-accent="orange"] { --accent:#F07A3A; }
+.dn[data-style="lime"] { --session-background:#0B0806;--session-text:#F2F2EE99;--session-time:#F2F2EEB3;--session-time-paused:#F2F2EE80;--session-control-background:#F2F2EE0D;--session-control-border:#F2F2EE1A;--session-control-text:#F2F2EECC; }
+.dn[data-style="lime"][data-mode="dark"] { --background-primary:#120C09;--background-secondary:#F2F2EE0D;--background-tertiary:#F2F2EE1A;--separator:#F2F2EE33;--fill:#F2F2EE1A;--control-border:#B2BF72;--control-fill:#F2F2EE66;--text-primary:#F2F2EEE6;--text-secondary:#F2F2EEB3;--text-tertiary:#F2F2EE99;--text-quaternary:#F2F2EE66;--settings-bg:#0B0806; }
+.dn[data-style="lime"][data-mode="light"] { --background-primary:#E7E7E7;--background-secondary:#FFFFFF;--background-tertiary:#120C090D;--separator:#120C091A;--fill:#120C091A;--control-border:#3F6A0A;--control-fill:#120C091A;--text-primary:#120C09E6;--text-secondary:#120C09B3;--text-tertiary:#120C0999;--text-quaternary:#120C0966;--settings-bg:#E7E7E7; }
+.dn[data-style="lime"][data-mode="dark"][data-accent="orange"] { --accent:#A9FE52;--accent-text:#A9FE52;--on-accent:#120C09; }
+.dn[data-style="lime"][data-mode="light"][data-accent="orange"] { --accent:#A9FE52;--accent-text:#3F6A0A;--on-accent:#120C09; }
+.dn[data-style="lime"][data-mode="dark"][data-screen="session"][data-accent="orange"] { --accent:#A9FE52; }
+.dn[data-style="aqua"] { --session-background:#061827;--session-text:#E8F6F999;--session-time:#E8F6F9B3;--session-time-paused:#E8F6F980;--session-control-background:#E8F6F90D;--session-control-border:#E8F6F91A;--session-control-text:#E8F6F9CC; }
+.dn[data-style="aqua"][data-mode="light"] { --background-primary:#DDEFF3;--background-secondary:#FFFFFFB3;--background-tertiary:#09233C0D;--separator:#09233C1A;--fill:#09233C1A;--control-border:#09233C80;--control-fill:#09233C1A;--text-primary:#09233CE6;--text-secondary:#09233CCC;--text-tertiary:#09233CB3;--text-quaternary:#09233C66;--settings-bg:#DDEFF3; }
+.dn[data-style="aqua"][data-mode="dark"] { --background-primary:#071C30;--background-secondary:#E8F6F90D;--background-tertiary:#E8F6F91A;--separator:#E8F6F933;--fill:#E8F6F91A;--control-border:#E8F6F966;--control-fill:#E8F6F966;--text-primary:#E8F6F9E6;--text-secondary:#E8F6F9B3;--text-tertiary:#E8F6F999;--text-quaternary:#E8F6F966;--settings-bg:#061827; }
+.dn[data-style="aqua"][data-mode="light"][data-accent="orange"] { --accent:#65CEE6;--accent-text:#0E5F80;--on-accent:#09233C; }
+.dn[data-style="aqua"][data-mode="dark"][data-accent="orange"] { --accent:#98EFFE;--accent-text:#98EFFE;--on-accent:#09233C; }
+.dn[data-style="aqua"][data-mode="dark"][data-screen="session"][data-accent="orange"] { --accent:#98EFFE; }
+
+/* Warm glass: system font (kept), glass, one generated photo per purpose under a scrim (photos/, Figma AI, 2026-11-13) */
+.dn[data-style="warm"] { --glass-border: #FBF4F129; --photo: url("photos/relax.jpg"); }
+.dn[data-style="warm"][data-purpose="relax"] { --photo: url("photos/relax.jpg"); }
+.dn[data-style="warm"][data-purpose="reload"] { --photo: url("photos/reload.jpg"); }
+.dn[data-style="warm"][data-purpose="think"] { --photo: url("photos/think.jpg"); }
+.dn[data-style="warm"][data-purpose="coffee"] { --photo: url("photos/coffee.jpg"); }
+.dn[data-style="warm"][data-purpose="pause"] { --photo: url("photos/pause.jpg"); }
+
+.dn[data-style="warm"][data-mode="light"] { --glass-border: #FFFFFFB3; }
+.dn[data-style="warm"]:is([data-screen="start"], [data-screen="welcome"], [data-screen="end"]) { --background-primary:#17110F;--background-secondary:#FBF4F11A;--background-tertiary:#FBF4F11A;--separator:#FBF4F133;--fill:#FBF4F11A;--control-border:#FBF4F166;--control-fill:#FBF4F166;--text-primary:#FBF4F1E6;--text-secondary:#FBF4F1B3;--text-tertiary:#FBF4F199;--text-quaternary:#FBF4F166;--settings-bg:#0E0908; color-scheme: dark; --glass-border: #FBF4F129; background: linear-gradient(180deg, rgba(14,9,8,.35) 0%, rgba(14,9,8,.80) 34%, rgba(14,9,8,.84) 70%, rgba(14,9,8,.92) 100%), var(--photo) center / cover no-repeat, #0E0908 !important; color: var(--text-primary) !important; }
+.dn[data-style="warm"]:is([data-screen="start"], [data-screen="welcome"], [data-screen="end"])[data-accent="orange"] { --accent: #F07A3A; --accent-text: #F07A3A; --on-accent: #000000; }
+.dn[data-style="warm"][data-screen="session"] { background: linear-gradient(180deg, rgba(14,9,8,.85), rgba(14,9,8,.85)), var(--photo) center / cover no-repeat, #0E0908 !important; }
+.dn[data-style="warm"] :is([style*="background: var(--background-secondary)"], [style*="background: var(--background-tertiary)"], [style*="background: var(--session-control-background)"]) { -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); box-shadow: inset 0 0 0 1px var(--glass-border); }
+.dn[data-style="warm"] [style*="border-radius: 30px"][style*="background: var(--accent)"] { border-radius: 9999px !important; box-shadow: 0 8px 24px #00000040; }
+.dn[data-style="warm"] [style*="border-radius: 16px"] { border-radius: 24px !important; }
+.dn[data-style="warm"] [style*="border-radius: 20px"] { border-radius: 24px !important; }
+
+/* Lime bento: medium big numbers in lime, bento tiles 28, olive ovals, outlined pills */
+.dn[data-style="lime"][data-mode="dark"] { --outline: #B2BF72; }
+.dn[data-style="lime"][data-mode="light"] { --outline: #3F6A0A; }
+.dn[data-style="lime"][data-screen="session"] { --outline: #B2BF72; }
+.dn[data-style="lime"] [style*="border-radius: 16px"] { border-radius: 28px !important; }
+.dn[data-style="lime"] :is([style*="font-size: 44px"], [style*="font-size: 22px"][style*="font-weight: 600"]) { font-weight: 500 !important; letter-spacing: -0.02em; }
+.dn[data-style="lime"] [style*="font-size: 56px"] { font-size: 64px !important; font-weight: 500 !important; letter-spacing: -0.03em; color: var(--accent-text) !important; }
+.dn[data-style="lime"] [role="timer"] { font-size: 80px !important; font-weight: 500 !important; letter-spacing: -0.04em; color: var(--accent) !important; padding: 14px 28px; border: 1.5px solid var(--outline); border-radius: 9999px; }
+.dn[data-style="lime"] button[aria-pressed="false"][style*="border-radius: 22px"] { background: transparent !important; box-shadow: inset 0 0 0 1px var(--control-border); }
+.dn[data-style="lime"] [role="group"] [style*="flex-wrap: wrap"] { display: grid !important; grid-template-columns: 1fr 1fr; }
+.dn[data-style="lime"] [role="group"] [style*="flex-wrap: wrap"] sc-for { display: contents; }
+.dn[data-style="lime"] [role="group"] [style*="flex-wrap: wrap"] button { min-height: 60px !important; border-radius: 24px !important; display: flex; align-items: flex-end; justify-content: flex-start; text-align: left; padding: 0 16px 12px 16px !important; }
+.dn[data-style="lime"] [style*="border-radius: 20px"][style*="height: 60px"] { border-radius: 9999px !important; background: transparent !important; box-shadow: inset 0 0 0 1.5px var(--outline); }
+
+/* Aqua sphere: light first, regular titles, drawn spheres, white cards 20, aqua button with a round navy arrow */
+.dn[data-style="aqua"]:is([data-screen="start"], [data-screen="welcome"], [data-screen="end"])[data-mode="light"] { background: radial-gradient(circle at 42% 40%, rgba(255,255,255,0.85) 0, rgba(152,239,254,0.75) 25px, rgba(101,206,230,0.50) 86px, rgba(101,206,230,0.20) 130px, transparent 144px) calc(100% + 60px) -30px / 360px 360px no-repeat, radial-gradient(circle at 42% 40%, rgba(255,255,255,0.85) 0, rgba(152,239,254,0.75) 4px, rgba(101,206,230,0.50) 15px, rgba(101,206,230,0.20) 23px, transparent 26px) 14px 77% / 64px 64px no-repeat, radial-gradient(circle at 42% 40%, rgba(255,255,255,0.85) 0, rgba(152,239,254,0.75) 3px, rgba(101,206,230,0.50) 9px, rgba(101,206,230,0.20) 13px, transparent 14px) calc(100% - 52px) 73% / 36px 36px no-repeat, var(--background-primary) !important; }
+.dn[data-style="aqua"]:is([data-screen="start"], [data-screen="welcome"], [data-screen="end"])[data-mode="dark"] { background: radial-gradient(circle at 42% 40%, rgba(255,255,255,0.38) 0, rgba(152,239,254,0.34) 25px, rgba(101,206,230,0.23) 86px, rgba(101,206,230,0.09) 130px, transparent 144px) calc(100% + 60px) -30px / 360px 360px no-repeat, var(--background-primary) !important; }
+.dn[data-style="aqua"][data-screen="session"] { background: radial-gradient(circle at 42% 40%, rgba(255,255,255,0.30) 0, rgba(152,239,254,0.26) 29px, rgba(101,206,230,0.17) 101px, rgba(101,206,230,0.07) 151px, transparent 168px) 50% 42% / 420px 420px no-repeat, var(--session-background) !important; }
+.dn[data-style="aqua"] [style*="font-size: 44px"] { font-weight: 400 !important; letter-spacing: -0.02em; line-height: 1.08 !important; }
+.dn[data-style="aqua"] [style*="font-size: 22px"][style*="font-weight: 600"] { font-size: 24px !important; line-height: 30px !important; font-weight: 400 !important; letter-spacing: -0.01em; }
+.dn[data-style="aqua"] [style*="border-radius: 16px"] { border-radius: 20px !important; }
+.dn[data-style="aqua"][data-mode="light"] button[aria-pressed="false"][style*="border-radius: 22px"] { background: #FFFFFF !important; }
+.dn[data-style="aqua"] [style*="border-radius: 30px"][style*="background: var(--accent)"] { position: relative !important; border-radius: 9999px !important; padding: 0 60px 0 24px !important; }
+.dn[data-style="aqua"] [style*="border-radius: 30px"][style*="background: var(--accent)"]::after { content: ""; position: absolute; right: 8px; top: 50%; width: 44px; height: 44px; margin-top: -22px; border-radius: 9999px; background: #09233C url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 20px no-repeat; }
+
+/* Reduce Transparency has no CSS query; the app removes glass, photos and spheres there (DESIGN.md). Reduce Motion: nothing here moves. */

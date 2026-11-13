@@ -7,3 +7,5 @@ Phones, tablets, desktops: each screen scales to fit the browser window and stay
 Everything is inside this folder: the screens (*.dc.html), tokens.css, photos/ (if the style has photos) and offline/ (React 18.3.1 and the page runtime).
 No server and no internet needed. Keep the folder together: moving one file out breaks its links.
 Fonts: the system font (SF Pro on Apple devices), so no font files are needed.
+
+Other versions: v5/ (original style), v5.2-lime-bento/ and v5.3-aqua-sphere/, each with its own index.html. Screens.html links to all four.

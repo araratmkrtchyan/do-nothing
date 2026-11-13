@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="offline/fit.css">
+<script src="offline/fit.js"></script>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" data-style="{{dnStyle}}" data-screen="welcome" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accent}}" style="width: 390px; height: 844px; box-sizing: border-box; background: var(--background-primary); color: var(--text-primary); display: flex; flex-direction: column; padding: 96px 20px 40px 20px">
+<div aria-hidden="true" style="position: relative; width: 64px; height: 64px; flex-shrink: 0; display: flex; align-items: center; justify-content: center">
+<div style="position: absolute; inset: 0; border-radius: 9999px; border: 2px solid var(--accent); opacity: 0.4"></div>
+<div style="width: 32px; height: 32px; border-radius: 9999px; background: var(--accent)"></div>
+</div>
+<h1 style="margin: 32px 0 0 0; font-size: 34px; line-height: 41px; font-weight: 700">{{t.title}}</h1>
+<p style="margin: 12px 0 0 0; font-size: 17px; line-height: 22px; color: var(--text-secondary)">{{t.body}}</p>
+<ol style="margin: 32px 0 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 20px">
+<li style="display: flex; gap: 16px; align-items: flex-start">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: var(--background-tertiary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 17px; font-weight: 600">1</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 17px; line-height: 22px; font-weight: 600">{{t.s1}}</span><span style="font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.s1b}}</span></span>
+</li>
+<li style="display: flex; gap: 16px; align-items: flex-start">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: var(--background-tertiary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 17px; font-weight: 600">2</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 17px; line-height: 22px; font-weight: 600">{{t.s2}}</span><span style="font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.s2b}}</span></span>
+</li>
+<li style="display: flex; gap: 16px; align-items: flex-start">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 9999px; background: var(--background-tertiary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 17px; font-weight: 600">3</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 17px; line-height: 22px; font-weight: 600">{{t.s3}}</span><span style="font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.s3b}}</span></span>
+</li>
+</ol>
+<div style="flex-grow: 1"></div>
+<a href="{{mainHref}}" onClick="{{nav}}" style="min-height: 60px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 30px; background: var(--accent); color: var(--on-accent); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 700">{{t.cta}}</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"lime"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"go":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+/* Strings from the Do Nothing translations table. Generated, edit the table instead. */
+dnT(k, v){ const T = {"unit_minute_few":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минуты"},"unit_minute_many":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минут"},"unit_minute_one":{"en":"{n} minute","hy":"{n} րոպե","ru":"{n} минута"},"welcome_body":{"en":"Stopping is how you recharge. Pick a reason and a length, and we’ll hold the time for you.","hy":"Կանգ առնելով ենք լիցքավորվում։ Ընտրիր պատճառը և տևողությունը, իսկ ժամանակը մենք կպահենք։","ru":"Остановиться — значит восстановить силы. Выбери причину и длительность, а время мы возьмём на себя."},"welcome_cta":{"en":"Let’s do nothing","hy":"Եկ ոչինչ չանենք","ru":"Давай ничего не делать"},"welcome_s1_body":{"en":"Relax, reload, a coffee, or just a pause.","hy":"Հանգստանալ, լիցքավորվել, սուրճ կամ պարզապես դադար։","ru":"Отдохнуть, перезагрузиться, выпить кофе или просто сделать паузу."},"welcome_s1_title":{"en":"Say why","hy":"Ասա՝ ինչու","ru":"Скажи зачем"},"welcome_s2_body":{"en":"Two minutes or a whole hour.","hy":"Երկու րոպե կամ մի ամբողջ ժամ։","ru":"От двух минут до целого часа."},"welcome_s2_title":{"en":"Say how long","hy":"Ասա՝ որքան","ru":"Скажи, сколько"},"welcome_s3_body":{"en":"A notification when it’s time. Stop there, or stay a little longer.","hy":"Ծանուցում, երբ ժամանակը գա։ Կանգ առ կամ մնա մի քիչ էլ։","ru":"Уведомление, когда пора. Можно закончить или побыть ещё немного."},"welcome_s3_title":{"en":"We’ll tell you when","hy":"Մենք կասենք՝ երբ","ru":"Мы скажем, когда"},"welcome_title":{"en":"Permission to do nothing","hy":"Ոչինչ չանելու ազատություն","ru":"Разрешение ничего не делать"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
+renderVals() {
+const dark = this.props.dark ?? true;
+const go = this.props.go;
+const T = (k, v) => this.dnT(k, v);
+return { dnStyle: this.props.variant || 'lime',
+lang: this.props.lang || 'en',
+mode: dark ? 'dark' : 'light',
+accent: this.props.accent || 'orange',
+t: { title: T('welcome_title'), body: T('welcome_body'), s1: T('welcome_s1_title'), s1b: T('welcome_s1_body'), s2: T('welcome_s2_title'), s2b: T('welcome_s2_body'), s3: T('welcome_s3_title'), s3b: T('welcome_s3_body'), cta: T('welcome_cta') },
+mainHref: dark ? 'Main.dc.html' : 'MainLight.dc.html',
+nav: (e) => { if (go) { e.preventDefault(); go('main'); } }
+};
+}
+}
+</script>
+</body>
+</html>

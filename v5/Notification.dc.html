@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — End notification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="offline/fit.css">
+<script src="offline/fit.js"></script>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accent}}" style="width: 390px; height: 844px; box-sizing: border-box; background: var(--background-primary); color: var(--text-primary); display: flex; flex-direction: column; align-items: center; padding: 96px 12px 40px 12px">
+<div style="font-size: 20px; line-height: 25px; font-weight: 500">{{t.date}}</div>
+<div style="margin-top: 4px; font-size: 96px; line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums">19:30</div>
+<div style="flex-grow: 1"></div>
+<a href="{{endHref}}" onClick="{{nav}}" aria-label="{{t.a11y}}" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 22px; background: var(--background-tertiary); color: var(--text-primary); text-decoration: none">
+<span aria-hidden="true" style="width: 38px; height: 38px; border-radius: 9px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" style="fill: var(--on-accent)"><path d="M13.5 2L4 13.5h6.5L9.5 22 20 9.5h-6.5L13.5 2z"></path></svg>
+</span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><span style="font-size: 15px; line-height: 20px; font-weight: 600">{{t.app}}</span><span style="font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{t.now}}</span></span>
+<span style="font-size: 15px; line-height: 20px">{{t.line}}</span>
+</span>
+</a>
+<div style="height: 120px"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"purpose":{"editor":"enum","options":["relax","reload","think","coffee","pause"],"default":"coffee"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"go":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+/* Strings from the Do Nothing translations table. Generated, edit the table instead. */
+dnT(k, v){ const T = {"app_name":{"en":"Do Nothing","hy":"Do Nothing","ru":"Do Nothing"},"notif_a11y":{"en":"Do Nothing notification: {line}. Opens the End screen.","hy":"Do Nothing ծանուցում․ {line}։ Բացում է Ավարտի էկրանը։","ru":"Уведомление Do Nothing: {line}. Открывает экран завершения."},"notif_coffee":{"en":"That was your coffee pause","hy":"Սա քո սուրճի դադարն էր","ru":"Это была твоя кофейная пауза"},"notif_date":{"en":"Thursday, 5 November","hy":"Հինգշաբթի, նոյեմբերի 5","ru":"четверг, 5 ноября"},"notif_now":{"en":"now","hy":"հիմա","ru":"сейчас"},"notif_pause":{"en":"That was your pause","hy":"Սա քո դադարն էր","ru":"Это была твоя пауза"},"notif_relax":{"en":"That was your time to relax","hy":"Սա քո հանգստի ժամանակն էր","ru":"Это было твоё время отдохнуть"},"notif_reload":{"en":"You’ve had your reload","hy":"Սա քո լիցքավորումն էր","ru":"Это была твоя перезагрузка"},"notif_think":{"en":"That was your break from overthinking","hy":"Սա քո դադարն էր մտքերից","ru":"Это была твоя передышка от мыслей"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
+renderVals() {
+const dark = this.props.dark ?? true;
+const go = this.props.go;
+const T = (k, v) => this.dnT(k, v);
+const lines = { relax: 'notif_relax', reload: 'notif_reload', think: 'notif_think', coffee: 'notif_coffee', pause: 'notif_pause' };
+const line = T(lines[this.props.purpose] || 'notif_coffee');
+return {
+lang: this.props.lang || 'en',
+mode: dark ? 'dark' : 'light',
+accent: this.props.accent || 'orange',
+t: { date: T('notif_date'), app: T('app_name'), now: T('notif_now'), line, a11y: T('notif_a11y', { line }) },
+endHref: dark ? 'End.dc.html' : 'EndLight.dc.html',
+nav: (e) => { if (go) { e.preventDefault(); go('end'); } }
+};
+}
+}
+</script>
+</body>
+</html>

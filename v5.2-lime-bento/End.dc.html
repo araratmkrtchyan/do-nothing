@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — End</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="offline/fit.css">
+<script src="offline/fit.js"></script>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" data-style="{{dnStyle}}" data-purpose="{{dnPurpose}}" data-screen="end" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accent}}" style="width: 390px; height: 844px; box-sizing: border-box; background: var(--background-primary); color: var(--text-primary); display: flex; flex-direction: column; padding: 72px 20px 40px 20px">
+<div style="text-align: center; font-size: 17px; line-height: 22px; color: var(--text-secondary)">{{purposeLabel}}</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
+<div aria-hidden="true" style="position: relative; width: 132px; height: 132px; display: flex; align-items: center; justify-content: center">
+<div style="position: absolute; inset: 0; border-radius: 9999px; border: 1px solid var(--separator)"></div>
+<div style="position: absolute; inset: 20px; border-radius: 9999px; border: 1px solid var(--accent); opacity: 0.4"></div>
+<div style="width: 48px; height: 48px; border-radius: 9999px; background: var(--accent)"></div>
+</div>
+<h1 style="margin: 40px 0 0 0; font-size: 44px; line-height: 1.05; font-weight: 600">{{title}}</h1>
+<p style="margin: 12px 0 0 0; font-size: 17px; line-height: 22px; color: var(--text-secondary); white-space: pre-line">{{line}}</p>
+</div>
+<sc-if value="{{onTime}}" hint-placeholder-val="{{ true }}">
+<div role="group" aria-label="{{t.longer}}" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px">
+<div style="text-align: center; font-size: 15px; line-height: 20px; color: var(--text-secondary)">{{t.longer}}</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<a href="{{to.session}}" onClick="{{nav.p5}}" aria-label="{{t.add5}}" style="height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--background-secondary); color: var(--text-primary); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 500">+5</a>
+<a href="{{to.session}}" onClick="{{nav.p10}}" aria-label="{{t.add10}}" style="height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--background-secondary); color: var(--text-primary); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 500">+10</a>
+<a href="{{to.session}}" onClick="{{nav.p15}}" aria-label="{{t.add15}}" style="height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--background-secondary); color: var(--text-primary); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 500">+15</a>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{showAnother}}" hint-placeholder-val="{{ false }}">
+<a href="{{to.main}}" onClick="{{nav.main}}" style="margin-bottom: 12px; min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid var(--control-border); color: var(--text-primary); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 500">{{t.another}}</a>
+</sc-if>
+<a href="{{to.main}}" onClick="{{nav.main}}" style="min-height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 30px; background: var(--accent); color: var(--on-accent); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 700">{{t.finish}}</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"lime"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"purpose":{"editor":"enum","options":["relax","reload","think","coffee","pause"],"default":"coffee"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"late":{"editor":"boolean","default":false},"early":{"editor":"boolean","default":false},"go":{"editor":null},"mins":{"editor":null},"elapsed":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+/* Strings from the Do Nothing translations table. Generated, edit the table instead. */
+dnT(k, v){ const T = {"end_add":{"en":"Add {mins}","hy":"Ավելացնել {mins}","ru":"Добавить {mins}"},"end_another":{"en":"Start another","hy":"Սկսել ևս մեկը","ru":"Начать ещё раз"},"end_finish":{"en":"Finish","hy":"Ավարտել","ru":"Завершить"},"end_line":{"en":"That was {mins} of doing nothing.","hy":"Դա {mins} ոչինչ չանելու ժամանակ էր։","ru":"Позади {mins} ничегонеделания."},"end_line_early":{"en":"{mins} of doing nothing.\nThat still counts.","hy":"{mins} ոչինչ չանելու։\nԴա էլ է կարևոր։","ru":"{mins} ничегонеделания.\nЭто тоже считается."},"end_line_late":{"en":"Your {mins} ended at {time},\n{ago} ago.","hy":"Քո {mins}ն ավարտվեց {time}-ին,\n{ago} առաջ։","ru":"Всё закончилось в {time},\n{ago} назад."},"end_longer":{"en":"A little longer?","hy":"Մի քիչ է՞լ","ru":"Ещё немного?"},"end_title":{"en":"Time’s up","hy":"Ժամանակն ավարտվեց","ru":"Время вышло"},"end_title_early":{"en":"Ended early","hy":"Ավարտվեց շուտ","ru":"Завершено раньше"},"purpose_coffee":{"en":"Coffee or a quiet moment","hy":"Սուրճ կամ լռություն","ru":"Кофе или минутка тишины"},"purpose_pause":{"en":"A pause","hy":"Դադար","ru":"Пауза"},"purpose_relax":{"en":"Relax","hy":"Հանգստանալ","ru":"Отдохнуть"},"purpose_reload":{"en":"Reload","hy":"Լիցքավորվել","ru":"Перезагрузиться"},"purpose_think":{"en":"Stop overthinking","hy":"Բաց թողնել մտքերը","ru":"Отпустить мысли"},"unit_minute_few":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минуты"},"unit_minute_many":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минут"},"unit_minute_one":{"en":"{n} minute","hy":"{n} րոպե","ru":"{n} минута"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
+renderVals() {
+const dark = this.props.dark ?? true;
+const late = this.props.late ?? false;
+const early = !late && (this.props.early ?? false);
+const go = this.props.go;
+const T = (k, v) => this.dnT(k, v);
+const nav = (k) => (e) => { if (go) { e.preventDefault(); go(k); } };
+const navP = (n) => (e) => { if (go) { e.preventDefault(); go('prolong', n); } };
+const mm = this.props.mins || 30;
+const el = this.props.elapsed || 11;
+const labels = { relax: 'purpose_relax', reload: 'purpose_reload', think: 'purpose_think', coffee: 'purpose_coffee', pause: 'purpose_pause' };
+return { dnStyle: this.props.variant || 'lime', dnPurpose: this.props.purpose || 'coffee',
+lang: this.props.lang || 'en',
+mode: dark ? 'dark' : 'light',
+accent: this.props.accent || 'orange',
+t: { longer: T('end_longer'), add5: T('end_add', { mins: this.dnMin(5) }), add10: T('end_add', { mins: this.dnMin(10) }), add15: T('end_add', { mins: this.dnMin(15) }), another: T('end_another'), finish: T('end_finish') },
+purposeLabel: T(labels[this.props.purpose] || 'purpose_coffee'),
+title: early ? T('end_title_early') : T('end_title'),
+line: early ? T('end_line_early', { mins: this.dnMin(el) }) : (late ? T('end_line_late', { mins: this.dnMin(mm), time: '19:30', ago: this.dnMin(12) }) : T('end_line', { mins: this.dnMin(mm) })),
+onTime: !early,
+showAnother: late || early,
+nav: { main: nav('main'), p5: navP(5), p10: navP(10), p15: navP(15) },
+to: dark ? { session: 'Session.dc.html', main: 'Main.dc.html' } : { session: 'SessionLight.dc.html', main: 'MainLight.dc.html' }
+};
+}
+}
+</script>
+</body>
+</html>

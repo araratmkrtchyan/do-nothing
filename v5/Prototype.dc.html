@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Do Nothing — Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="offline/fit.css">
+<script src="offline/fit.js"></script>
+<script src="offline/resources.js"></script>
+<script src="offline/support.js"></script>
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="dn" lang="{{lang}}" data-mode="{{mode}}" style="position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--background-primary)">
+<sc-if value="{{is.loading}}" hint-placeholder-val="{{ true }}">
+<div class="{{cls.loading}}" style="{{z.loading}}"><dc-import name="Loading" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.welcome}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.welcome}}" style="{{z.welcome}}"><dc-import name="Welcome" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.main}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.main}}" style="{{z.main}}"><dc-import name="Main" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" notifications-off="{{notifOff}}" purpose="{{choice.purpose}}" mins="{{choice.mins}}" last="{{choice.last}}" on-choose="{{choose}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.permission}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.permission}}" style="{{z.permission}}"><dc-import name="Permission" overlay="{{ true }}" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.session}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.session}}" style="{{z.session}}"><dc-import name="Session" accent="{{accent}}" lang="{{lang}}" go="{{go}}" notifications-off="{{notifOff}}" purpose="{{choice.purpose}}" mins="{{sessionMins}}" fast="{{fast}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.end}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.end}}" style="{{z.end}}"><dc-import name="End" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" purpose="{{choice.purpose}}" mins="{{sessionMins}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.endEarly}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.endEarly}}" style="{{z.endEarly}}"><dc-import name="End" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" early="{{ true }}" purpose="{{choice.purpose}}" mins="{{sessionMins}}" elapsed="{{elapsed}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+<sc-if value="{{is.settings}}" hint-placeholder-val="{{ false }}">
+<div class="{{cls.settings}}" style="{{z.settings}}"><dc-import name="Settings" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" on-lang="{{setLang}}" go="{{go}}" notifications-off="{{notifOff}}" on-accent="{{setAccent}}" skin="{{skin}}" on-skin="{{setSkin}}" hint-size="390px,844px"></dc-import></div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"fast":{"editor":"boolean","default":false},"firstStart":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(p){ super(p); this.state = { screen: 'loading', prev: null, kind: 'root', accent: 'orange', lang: null, skin: (p.dark ?? true) ? 'dark' : 'light', asked: !p.firstStart, choice: { purpose: 'relax', mins: 20, last: { relax: 20, reload: 10, think: 10, coffee: 15, pause: 10 } } }; }
+componentDidMount(){ this.timer = setTimeout(() => { if (this.state.screen === 'loading') this.move('welcome'); }, 3200); }
+componentWillUnmount(){ clearTimeout(this.timer); clearTimeout(this.moveT); }
+/* Motion (DESIGN.md › Motion): Settings is presented (rises, drops on Done), the notification sheet rises over Start, every root change is a 0.3 s crossfade. */
+move(to, extra){ const from = this.state.screen; const kind = to === 'settings' ? 'present' : (from === 'settings' && to === 'main') ? 'dismiss' : to === 'permission' ? 'sheet' : 'root'; clearTimeout(this.moveT); this.setState({ ...(extra || {}), screen: to, prev: from === to ? null : from, kind }); this.moveT = setTimeout(() => this.setState({ prev: null }), 520); }
+renderVals() {
+const s = this.state;
+const sysDark = (() => { try { return window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return this.props.dark ?? true; } })();
+const dark = s.skin === 'system' ? sysDark : s.skin === 'dark';
+const go = (k, v) => {
+if (k === 'start') { const c = (v && v.mins) ? v : this.state.choice; this.move(this.state.asked ? 'session' : 'permission', { asked: true, choice: c, sessionMins: c.mins }); return; }
+if (k === 'prolong') { this.move('session', { sessionMins: v }); return; }
+if (k === 'endEarly') { this.move('endEarly', { elapsed: v || 1 }); return; }
+if (k === 'decline') { this.move('session', { notifOff: true }); return; }
+const map = { settings: 'settings', session: 'session', end: 'end', main: 'main' };
+this.move(map[k] || 'main');
+};
+const is = {}, cls = {}, z = {};
+['loading', 'welcome', 'main', 'permission', 'session', 'end', 'endEarly', 'settings'].forEach((k) => {
+const cur = s.screen === k, old = s.prev === k, under = k === 'main' && (s.screen === 'permission' || s.prev === 'permission');
+is[k] = cur || old || under;
+cls[k] = 'dn-layer' + (cur && s.prev && s.kind === 'present' ? ' dn-rise' : '') + (cur && s.prev && s.kind === 'root' ? ' dn-cross' : '') + (old && s.kind === 'dismiss' ? ' dn-drop' : '');
+z[k] = 'z-index: ' + (old && s.kind === 'dismiss' ? 3 : cur ? 2 : 1);
+});
+return {
+lang: s.lang || this.props.lang || 'en',
+setLang: (id) => this.setState({ lang: id }),
+mode: dark ? 'dark' : 'light',
+dark,
+is, cls, z, go,
+choice: s.choice,
+choose: (c) => this.setState({ choice: c }),
+sessionMins: s.sessionMins || s.choice.mins,
+elapsed: s.elapsed || 1,
+fast: this.props.fast ?? false,
+notifOff: !!s.notifOff,
+accent: s.accent,
+setAccent: (id) => this.setState({ accent: id }),
+skin: s.skin,
+setSkin: (id) => this.setState({ skin: id })
+};
+}
+}
+</script>
+</body>
+</html>

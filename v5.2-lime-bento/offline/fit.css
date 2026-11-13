@@ -1,0 +1,6 @@
+/* Fit the 390 x 844 screen to any browser window (the whole screen always shows, centred, scaled to the window). */
+html { background: var(--dn-page-bg, #0E0908); }
+html, body { margin: 0; min-height: 100%; }
+body { display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; }
+#dc-root { flex: none; width: 390px !important; height: 844px !important; transform-origin: top center; transform: scale(var(--dn-fit, 1)); }
+
