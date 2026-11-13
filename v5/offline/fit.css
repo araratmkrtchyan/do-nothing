@@ -1,6 +1,14 @@
-/* Fit the 390 x 844 screen to any browser window (the whole screen always shows, centred, scaled to the window). */
+/* Fit the 390 x 844 design to the browser. Phones: full width and full height. Tablets and desktops: centred. */
 html { background: var(--dn-page-bg, #0E0908); }
-html, body { margin: 0; min-height: 100%; }
+html, body { margin: 0; }
 body { display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; }
-#dc-root { flex: none; width: 390px !important; height: 844px !important; transform-origin: top center; transform: scale(var(--dn-fit, 1)); }
-
+#dc-root { flex: none; width: 390px !important; height: var(--dn-h, 844px) !important; transform-origin: top center; transform: scale(var(--dn-fit, 1)); }
+#dc-root [style*="height: 844px"] { height: var(--dn-h, 844px) !important; }
+/* Phone browser tab: the screens' status-bar (44 px) and home-indicator space is drawn by Safari itself, so it is
+   removed here. Opened from the Home Screen, the screens keep their full design padding. */
+.dn-web #dc-root .dn[style*="padding: 56px "] { padding-top: 12px !important; }
+.dn-web #dc-root .dn[style*="padding: 60px "] { padding-top: 16px !important; }
+.dn-web #dc-root .dn[style*="padding: 72px "] { padding-top: 28px !important; }
+.dn-web #dc-root .dn[style*="padding: 76px "] { padding-top: 32px !important; }
+.dn-web #dc-root .dn[style*="padding: 96px "] { padding-top: 52px !important; }
+.dn-web #dc-root .dn:is([style*="px 20px 40px 20px"], [style*="px 24px 40px 24px"], [style*="px 12px 40px 12px"]) { padding-bottom: 16px !important; }
