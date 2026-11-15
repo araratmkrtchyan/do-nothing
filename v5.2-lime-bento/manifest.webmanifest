@@ -1,0 +1,21 @@
+{
+ "name": "Do Nothing v5.2 · Lime bento",
+ "short_name": "Do Nothing",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#0B0806",
+ "theme_color": "#0B0806",
+ "icons": [
+  {
+   "src": "offline/icon-180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "offline/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

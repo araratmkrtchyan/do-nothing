@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#061827">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="offline/icon-180.png">
 <link rel="stylesheet" href="offline/fit.css">
 <script src="offline/fit.js"></script>
 <script src="offline/resources.js"></script>
@@ -68,7 +71,7 @@ body{margin:0}
 </div>
 <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 18px; text-align: center; color: var(--text-secondary)">{{t.available}}</p>
 <div style="flex-grow: 1"></div>
-<sc-if value="{{focusTip}}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{focusTip}}" hint-placeholder-val="{{ false }}">
 <div style="margin-bottom: 12px; padding: 4px 4px 4px 16px; border-radius: 16px; background: var(--background-secondary); display: flex; align-items: center; gap: 12px; font-size: 15px; line-height: 20px">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
 <span style="flex-grow: 1; padding: 12px 0">{{t.tip}}</span>
@@ -80,7 +83,7 @@ body{margin:0}
 <a href="{{to.start}}" onClick="{{nav.start}}" style="height: 60px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 30px; background: var(--accent); color: var(--on-accent); text-decoration: none; font-size: 20px; line-height: 25px; font-weight: 700">{{t.cta}}</a>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"aqua"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"notificationsOff":{"editor":"boolean","default":false},"focusTip":{"editor":"boolean","default":true},"go":{"editor":null},"onChoose":{"editor":null},"purpose":{"editor":null},"mins":{"editor":null},"last":{"editor":null},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"aqua"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"accent":{"editor":"enum","options":["orange","teal","lavender","rose"],"default":"orange"},"notificationsOff":{"editor":"boolean","default":false},"focusTip":{"editor":"boolean","default":false},"go":{"editor":null},"onChoose":{"editor":null},"purpose":{"editor":null},"mins":{"editor":null},"last":{"editor":null},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
 constructor(p){ super(p); this.state = { purpose: p.purpose || 'relax', mins: p.mins || 20, last: p.last || { relax: 20, reload: 10, think: 10, coffee: 15, pause: 10 }, tipClosed: false }; }
 /* Strings from the Do Nothing translations table. Generated, edit the table instead. */
@@ -106,7 +109,7 @@ t: { app: T('app_name'), settings: T('common_settings'), notifOff: T('start_noti
 nav: { settings: nav('settings'), start: nav('start') },
 to: dark ? { settings: 'Settings.dc.html', start: 'Permission.dc.html' } : { settings: 'SettingsLight.dc.html', start: 'PermissionLight.dc.html' },
 notifOff: this.props.notificationsOff ?? false,
-focusTip: (this.props.focusTip ?? true) && !s.tipClosed,
+focusTip: (this.props.focusTip ?? false) && !s.tipClosed,
 closeTip: () => this.setState({ tipClosed: true }),
 purposes: purposes.map(([id, key]) => { const on = s.purpose === id; return { label: T(key), on, pick: () => this.setState({ purpose: id, mins: s.last[id] }), style: chip(on) }; }),
 times: sets[s.purpose].map((m) => { const on = s.mins === m; return { label: m >= 60 ? T('unit_hour_chip') : T('unit_min_chip', { n: m }), on, pick: () => set(m), style: chip(on, 'padding: 0 4px; ') }; }),
