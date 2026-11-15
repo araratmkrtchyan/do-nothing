@@ -25,9 +25,10 @@ body{margin:0}
 </helmet>
 <div class="dn" data-style="{{dnStyle}}" lang="{{lang}}" data-mode="{{mode}}" data-accent="{{accentId}}" style="position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--settings-bg); color: var(--text-primary)">
 
-<div class="dn-pane" aria-hidden="{{mainHidden}}" style="{{paneMain}}">
-<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
-<h1 style="margin: 0; font-size: 34px; line-height: 41px; font-weight: 700">{{t.settings}}</h1>
+<div class="dn-pane" aria-hidden="{{mainHidden}}" style="{{paneMain}}" onScroll="{{scMain}}">
+<div style="{{navMain}}">
+<div style="position: relative; height: 44px; display: flex; align-items: center; justify-content: flex-end">
+<span aria-hidden="true" style="{{navTitleMain}}">{{t.settings}}</span>
 <sc-if value="{{t.doneIcon}}" hint-placeholder-val="{{ true }}">
 <a href="{{mainHref}}" onClick="{{nav}}" aria-label="{{t.doneA11y}}" style="width: 44px; height: 44px; margin-right: -10px; flex-shrink: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--accent-text)"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></a>
 </sc-if>
@@ -35,6 +36,8 @@ body{margin:0}
 <a href="{{mainHref}}" onClick="{{nav}}" style="min-height: 44px; display: flex; align-items: center; font-size: 17px; line-height: 22px; font-weight: 600; text-decoration: none; color: var(--accent-text)">{{t.done}}</a>
 </sc-if>
 </div>
+</div>
+<h1 style="margin: 4px 0 0 0; font-size: 34px; line-height: 41px; font-weight: 700">{{t.settings}}</h1>
 
 <div style="margin-top: 24px; padding: 0 16px 8px 16px; font-size: 13px; line-height: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary)">{{t.accent}}</div>
 <div role="group" aria-label="{{t.accent}}" style="flex-shrink: 0; border-radius: 16px; background: var(--background-secondary); padding: 16px 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
@@ -70,6 +73,12 @@ body{margin:0}
 
 <div style="margin-top: 24px; padding: 0 16px 8px 16px; font-size: 13px; line-height: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary)">{{t.general}}</div>
 <div style="flex-shrink: 0; border-radius: 16px; background: var(--background-secondary); padding: 0 16px">
+<button onClick="{{openStyle}}" style="width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: transparent; border: 0; border-bottom: 1px solid var(--separator); padding: 0; cursor: pointer; font-family: inherit; font-size: 17px; line-height: 22px; color: var(--text-primary); text-align: left">
+<span>{{t.style}}</span>
+<span style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary)">{{styleName}}
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-tertiary)"><path d="M9 6l6 6-6 6"></path></svg>
+</span>
+</button>
 <button onClick="{{openSkin}}" style="width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: transparent; border: 0; border-bottom: 1px solid var(--separator); padding: 0; cursor: pointer; font-family: inherit; font-size: 17px; line-height: 22px; color: var(--text-primary); text-align: left">
 <span>{{t.appearance}}</span>
 <span style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary)">{{skinName}}
@@ -90,11 +99,13 @@ body{margin:0}
 <p style="margin: 8px 16px 0 16px; font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{t.analytics}}</p>
 </div>
 
-<div class="dn-pane" aria-hidden="{{langHidden}}" style="{{paneLang}}">
+<div class="dn-pane" aria-hidden="{{langHidden}}" style="{{paneLang}}" onScroll="{{scLang}}">
+<div style="{{navLang}}">
 <div style="position: relative; height: 44px; display: flex; align-items: center">
 <button onClick="{{back}}" aria-label="{{t.back}}" style="position: relative; z-index: 1; width: 44px; height: 44px; margin-left: -12px; padding: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; cursor: pointer; color: var(--accent-text)">
 <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
 <h1 style="position: absolute; left: 44px; right: 44px; margin: 0; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; pointer-events: none">{{t.language}}</h1>
+</div>
 </div>
 <div role="radiogroup" aria-label="{{t.language}}" style="margin-top: 24px; flex-shrink: 0; border-radius: 16px; background: var(--background-secondary); padding: 0 16px">
 <sc-for list="{{langs}}" as="l" hint-placeholder-count="3">
@@ -109,11 +120,13 @@ body{margin:0}
 <p style="margin: 8px 16px 0 16px; font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{t.langNote}}</p>
 </div>
 
-<div class="dn-pane" aria-hidden="{{skinHidden}}" style="{{paneSkin}}">
+<div class="dn-pane" aria-hidden="{{skinHidden}}" style="{{paneSkin}}" onScroll="{{scSkin}}">
+<div style="{{navSkin}}">
 <div style="position: relative; height: 44px; display: flex; align-items: center">
 <button onClick="{{back}}" aria-label="{{t.back}}" style="position: relative; z-index: 1; width: 44px; height: 44px; margin-left: -12px; padding: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; cursor: pointer; color: var(--accent-text)">
 <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
 <h1 style="position: absolute; left: 44px; right: 44px; margin: 0; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; pointer-events: none">{{t.appearance}}</h1>
+</div>
 </div>
 <div role="radiogroup" aria-label="{{t.appearance}}" style="margin-top: 24px; flex-shrink: 0; border-radius: 16px; background: var(--background-secondary); padding: 0 16px">
 <sc-for list="{{skins}}" as="k" hint-placeholder-count="3">
@@ -128,14 +141,35 @@ body{margin:0}
 <p style="margin: 8px 16px 0 16px; font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{t.skinNote}}</p>
 </div>
 
+<div class="dn-pane" aria-hidden="{{styleHidden}}" style="{{paneStyle}}" onScroll="{{scStyle}}">
+<div style="{{navStyle}}">
+<div style="position: relative; height: 44px; display: flex; align-items: center">
+<button onClick="{{back}}" aria-label="{{t.back}}" style="position: relative; z-index: 1; width: 44px; height: 44px; margin-left: -12px; padding: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; cursor: pointer; color: var(--accent-text)">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<h1 style="position: absolute; left: 44px; right: 44px; margin: 0; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; pointer-events: none">{{t.style}}</h1>
+</div>
+</div>
+<div role="radiogroup" aria-label="{{t.style}}" style="margin-top: 24px; flex-shrink: 0; border-radius: 16px; background: var(--background-secondary); padding: 0 16px">
+<sc-for list="{{styles}}" as="y" hint-placeholder-count="3">
+<button role="radio" aria-checked="{{y.on}}" onClick="{{y.pick}}" style="{{y.row}}">
+<span>{{y.name}}</span>
+<sc-if value="{{y.on}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--accent-text)"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+</sc-if>
+</button>
+</sc-for>
+</div>
+<p style="margin: 8px 16px 0 16px; font-size: 13px; line-height: 18px; color: var(--text-secondary)">{{t.styleNote}}</p>
+</div>
+
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"warm"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"page":{"editor":"enum","options":["main","appearance","language"],"default":"main"},"notificationsOff":{"editor":"boolean","default":false},"accent":{"editor":null},"go":{"editor":null},"onAccent":{"editor":null},"skin":{"editor":null},"onSkin":{"editor":null},"onLang":{"editor":null},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"warm"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"page":{"editor":"enum","options":["main","appearance","language","style"],"default":"main"},"notificationsOff":{"editor":"boolean","default":false},"accent":{"editor":null},"go":{"editor":null},"onAccent":{"editor":null},"skin":{"editor":null},"onSkin":{"editor":null},"onStyle":{"editor":null},"onLang":{"editor":null},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-constructor(p){ super(p); this.state = { tip: false, notif: null, accent: p.accent || 'orange', lang: null, page: null, skin: null }; }
+constructor(p){ super(p); this.state = { tip: false, notif: null, accent: p.accent || 'orange', lang: null, page: null, skin: null, style: null, sc: {} }; }
 componentWillUnmount(){ clearTimeout(this.popT); }
 /* Strings from the Do Nothing translations table. Generated, edit the table instead. */
-dnT(k, v){ const T = {"common_back_settings":{"en":"Back to Settings","hy":"Վերադառնալ Կարգավորումներ","ru":"Назад к настройкам"},"common_done":{"en":"✓","hy":"✓","ru":"✓"},"common_done_a11y":{"en":"Done","hy":"Պատրաստ է","ru":"Готово"},"common_settings":{"en":"Settings","hy":"Կարգավորումներ","ru":"Настройки"},"lang_en":{"en":"English","hy":"Անգլերեն","ru":"Английский"},"lang_hy":{"en":"Armenian","hy":"Հայերեն","ru":"Армянский"},"lang_ru":{"en":"Russian","hy":"Ռուսերեն","ru":"Русский"},"set_accent":{"en":"Accent color","hy":"Հիմնական գույն","ru":"Акцентный цвет"},"set_analytics":{"en":"What we count: sessions started, sessions finished or ended early, and which purposes are picked. Anonymous, and nothing about you.","hy":"Ինչ ենք հաշվում․ սկսված սեանսները, ավարտված կամ շուտ ավարտված սեանսները և ընտրված նպատակները։ Անանուն է, և ոչինչ քո մասին։","ru":"Что мы считаем: начатые сеансы, завершённые или прерванные раньше и выбранные цели. Анонимно, ничего о тебе."},"set_appearance":{"en":"Appearance","hy":"Տեսք","ru":"Оформление"},"set_dark":{"en":"Dark","hy":"Մուգ","ru":"Тёмное"},"set_end_alert":{"en":"End alert","hy":"Ավարտի ազդանշան","ru":"Сигнал об окончании"},"set_focus_note":{"en":"A reminder on Start to turn on a Focus mode. iOS doesn’t let apps do it for you. A Focus can also hold the end back unless Do Nothing is allowed in it. Find it in Settings › Focus.","hy":"Հիշեցում մեկնարկի էկրանին՝ միացնելու Focus ռեժիմը։ iOS-ը թույլ չի տալիս հավելվածներին դա անել քո փոխարեն։ Focus-ը կարող է նաև հետաձգել ավարտը, եթե Do Nothing-ը դրանում թույլատրված չէ։ Գտիր այն՝ Settings › Focus։","ru":"Напоминание на главном экране включить фокусирование. iOS не даёт приложениям делать это за тебя. Фокусирование может и задержать уведомление об окончании, если в нём не разрешено Do Nothing. Оно находится в Настройки › Фокусирование."},"set_focus_tip":{"en":"Focus tip","hy":"Focus-ի հուշում","ru":"Совет о фокусировании"},"set_general":{"en":"General","hy":"Ընդհանուր","ru":"Основные"},"set_lang_note":{"en":"Changes the language of Do Nothing only. Your iPhone keeps its own.","hy":"Փոխում է միայն Do Nothing-ի լեզուն։ iPhone-ը պահում է իրենը։","ru":"Меняет язык только в Do Nothing. У iPhone останется свой."},"set_language":{"en":"Language","hy":"Լեզու","ru":"Язык"},"set_lavender":{"en":"Lavender","hy":"Նարդոսագույն","ru":"Лавандовый"},"set_light":{"en":"Light","hy":"Բաց","ru":"Светлое"},"set_notif_off":{"en":"Sessions still run, but the end only shows while the app is open. Turn notifications on to hear it anywhere.","hy":"Սեանսները կաշխատեն, բայց ավարտը կերևա միայն բաց հավելվածում։ Միացրու ծանուցումները, որ այն լսես ամենուր։","ru":"Сеансы всё равно идут, но конец виден только в открытом приложении. Включи уведомления, чтобы слышать его где угодно."},"set_notif_on":{"en":"One notification when your time is up, with your iOS alert sound. Pick a calmer one in iOS Settings › Sounds & Haptics. On silent, no sound plays.","hy":"Մեկ ծանուցում, երբ ժամանակդ լրանա, iOS-ի ազդանշանի ձայնով։ Ավելի հանգիստ ձայն ընտրիր iOS-ի Settings › Sounds & Haptics բաժնում։ Լուռ ռեժիմում ձայն չի հնչի։","ru":"Одно уведомление, когда время выйдет, со звуком оповещений iOS. Звук поспокойнее можно выбрать в Настройки › Звуки, тактильные сигналы. В бесшумном режиме звука не будет."},"set_notifications":{"en":"Notifications","hy":"Ծանուցումներ","ru":"Уведомления"},"set_open_ios":{"en":"Open iOS Settings","hy":"Բացել iOS-ի կարգավորումները","ru":"Открыть настройки iOS"},"set_orange":{"en":"Orange","hy":"Նարնջագույն","ru":"Оранжевый"},"set_quiet":{"en":"Quiet","hy":"Լռություն","ru":"Тишина"},"set_rose":{"en":"Rose","hy":"Վարդագույն","ru":"Розовый"},"set_skin_note":{"en":"System follows your iPhone’s Light or Dark setting. The Session screen always stays dark.","hy":"«Համակարգային»-ը հետևում է iPhone-ի բաց կամ մուգ կարգավորմանը։ Սեանսի էկրանը միշտ մուգ է։","ru":"«Системное» повторяет светлое или тёмное оформление iPhone. Экран сеанса всегда тёмный."},"set_system":{"en":"System","hy":"Համակարգային","ru":"Системное"},"set_teal":{"en":"Teal","hy":"Փիրուզագույն","ru":"Бирюзовый"},"set_version":{"en":"Version","hy":"Տարբերակ","ru":"Версия"},"unit_minute_few":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минуты"},"unit_minute_many":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минут"},"unit_minute_one":{"en":"{n} minute","hy":"{n} րոպե","ru":"{n} минута"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+dnT(k, v){ const T = {"common_back_settings":{"en":"Back to Settings","hy":"Վերադառնալ Կարգավորումներ","ru":"Назад к настройкам"},"common_done":{"en":"✓","hy":"✓","ru":"✓"},"common_done_a11y":{"en":"Done","hy":"Պատրաստ է","ru":"Готово"},"common_settings":{"en":"Settings","hy":"Կարգավորումներ","ru":"Настройки"},"lang_en":{"en":"English","hy":"Անգլերեն","ru":"Английский"},"lang_hy":{"en":"Armenian","hy":"Հայերեն","ru":"Армянский"},"lang_ru":{"en":"Russian","hy":"Ռուսերեն","ru":"Русский"},"set_accent":{"en":"Accent color","hy":"Հիմնական գույն","ru":"Акцентный цвет"},"set_analytics":{"en":"What we count: sessions started, sessions finished or ended early, and which purposes are picked. Anonymous, and nothing about you.","hy":"Ինչ ենք հաշվում․ սկսված սեանսները, ավարտված կամ շուտ ավարտված սեանսները և ընտրված նպատակները։ Անանուն է, և ոչինչ քո մասին։","ru":"Что мы считаем: начатые сеансы, завершённые или прерванные раньше и выбранные цели. Анонимно, ничего о тебе."},"set_appearance":{"en":"Appearance","hy":"Տեսք","ru":"Оформление"},"set_dark":{"en":"Dark","hy":"Մուգ","ru":"Тёмное"},"set_end_alert":{"en":"End alert","hy":"Ավարտի ազդանշան","ru":"Сигнал об окончании"},"set_focus_note":{"en":"A reminder on Start to turn on a Focus mode. iOS doesn’t let apps do it for you. A Focus can also hold the end back unless Do Nothing is allowed in it. Find it in Settings › Focus.","hy":"Հիշեցում մեկնարկի էկրանին՝ միացնելու Focus ռեժիմը։ iOS-ը թույլ չի տալիս հավելվածներին դա անել քո փոխարեն։ Focus-ը կարող է նաև հետաձգել ավարտը, եթե Do Nothing-ը դրանում թույլատրված չէ։ Գտիր այն՝ Settings › Focus։","ru":"Напоминание на главном экране включить фокусирование. iOS не даёт приложениям делать это за тебя. Фокусирование может и задержать уведомление об окончании, если в нём не разрешено Do Nothing. Оно находится в Настройки › Фокусирование."},"set_focus_tip":{"en":"Focus tip","hy":"Focus-ի հուշում","ru":"Совет о фокусировании"},"set_general":{"en":"General","hy":"Ընդհանուր","ru":"Основные"},"set_lang_note":{"en":"Changes the language of Do Nothing only. Your iPhone keeps its own.","hy":"Փոխում է միայն Do Nothing-ի լեզուն։ iPhone-ը պահում է իրենը։","ru":"Меняет язык только в Do Nothing. У iPhone останется свой."},"set_language":{"en":"Language","hy":"Լեզու","ru":"Язык"},"set_lavender":{"en":"Lavender","hy":"Նարդոսագույն","ru":"Лавандовый"},"set_light":{"en":"Light","hy":"Բաց","ru":"Светлое"},"set_notif_off":{"en":"Sessions still run, but the end only shows while the app is open. Turn notifications on to hear it anywhere.","hy":"Սեանսները կաշխատեն, բայց ավարտը կերևա միայն բաց հավելվածում։ Միացրու ծանուցումները, որ այն լսես ամենուր։","ru":"Сеансы всё равно идут, но конец виден только в открытом приложении. Включи уведомления, чтобы слышать его где угодно."},"set_notif_on":{"en":"One notification when your time is up, with your iOS alert sound. Pick a calmer one in iOS Settings › Sounds & Haptics. On silent, no sound plays.","hy":"Մեկ ծանուցում, երբ ժամանակդ լրանա, iOS-ի ազդանշանի ձայնով։ Ավելի հանգիստ ձայն ընտրիր iOS-ի Settings › Sounds & Haptics բաժնում։ Լուռ ռեժիմում ձայն չի հնչի։","ru":"Одно уведомление, когда время выйдет, со звуком оповещений iOS. Звук поспокойнее можно выбрать в Настройки › Звуки, тактильные сигналы. В бесшумном режиме звука не будет."},"set_notifications":{"en":"Notifications","hy":"Ծանուցումներ","ru":"Уведомления"},"set_open_ios":{"en":"Open iOS Settings","hy":"Բացել iOS-ի կարգավորումները","ru":"Открыть настройки iOS"},"set_orange":{"en":"Orange","hy":"Նարնջագույն","ru":"Оранжевый"},"set_quiet":{"en":"Quiet","hy":"Լռություն","ru":"Тишина"},"set_rose":{"en":"Rose","hy":"Վարդագույն","ru":"Розовый"},"set_skin_note":{"en":"System follows your iPhone’s Light or Dark setting. The Session screen always stays dark.","hy":"«Համակարգային»-ը հետևում է iPhone-ի բաց կամ մուգ կարգավորմանը։ Սեանսի էկրանը միշտ մուգ է։","ru":"«Системное» повторяет светлое или тёмное оформление iPhone. Экран сеанса всегда тёмный."},"set_style":{"en":"Style","hy":"Ոճ","ru":"Стиль"},"set_style_note":{"en":"Changes how Do Nothing looks. The Session screen always stays dark.","hy":"Փոխում է Do Nothing-ի տեսքը։ Սեանսի էկրանը միշտ մուգ է։","ru":"Меняет внешний вид Do Nothing. Экран сеанса всегда тёмный."},"set_style_warm":{"en":"Warm glass","hy":"Warm glass","ru":"Warm glass"},"set_style_lime":{"en":"Lime bento","hy":"Lime bento","ru":"Lime bento"},"set_style_aqua":{"en":"Aqua sphere","hy":"Aqua sphere","ru":"Aqua sphere"},"set_system":{"en":"System","hy":"Համակարգային","ru":"Системное"},"set_teal":{"en":"Teal","hy":"Փիրուզագույն","ru":"Бирюзовый"},"set_version":{"en":"Version","hy":"Տարբերակ","ru":"Версия"},"unit_minute_few":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минуты"},"unit_minute_many":{"en":"{n} minutes","hy":"{n} րոպե","ru":"{n} минут"},"unit_minute_one":{"en":"{n} minute","hy":"{n} րոպե","ru":"{n} минута"}}; const L = this.props.lang || 'en'; const e = T[k] || {}; let s = e[L] || e.en || k; if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
 dnMin(n){ const L = this.props.lang || 'en'; let f = n === 1 ? 'one' : 'many'; try { const c = new Intl.PluralRules(L).select(n); f = c === 'one' ? 'one' : (c === 'few' ? 'few' : 'many'); } catch (e) {} return this.dnT('unit_minute_' + f, { n: n }); }
 renderVals() {
 const base = this.props.dark ?? true;
@@ -150,7 +184,9 @@ const skin = this.props.onSkin ? (this.props.skin || 'dark') : (s.skin || (base 
 const dark = this.props.onSkin ? base : (s.skin ? (s.skin === 'system' ? sysDark : s.skin === 'dark') : base);
 const curId = this.props.onAccent ? (this.props.accent || 'orange') : s.accent;
 const notifOn = s.notif === null ? !(this.props.notificationsOff ?? false) : s.notif;
-const pane = 'position: absolute; inset: 0; box-sizing: border-box; overflow-y: auto; background: var(--settings-bg); display: flex; flex-direction: column; padding: 60px 20px 40px 20px; ';
+const pane = 'position: absolute; inset: 0; box-sizing: border-box; overflow-y: auto; background: var(--settings-bg); display: flex; flex-direction: column; padding: 0 20px 40px 20px; ';
+const navBar = (k, th) => { const on = !!(s.sc && s.sc[k]); return 'position: sticky; top: 0; z-index: 5; flex-shrink: 0; margin: 0 -20px; padding: 60px 20px 0 20px; background: color-mix(in srgb, var(--settings-bg) 72%, transparent); -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8); box-shadow: 0 0.5px 0 ' + (on ? 'var(--separator)' : 'transparent') + '; transition: box-shadow 0.2s'; };
+const scr = (k, th) => (e) => { const v = e.target.scrollTop > th; if (!!(this.state.sc && this.state.sc[k]) !== v) this.setState({ sc: Object.assign({}, this.state.sc, { [k]: v }) }); };
 const sw = (on, toggle) => ({
 on, toggle,
 track: 'width: 51px; height: 31px; flex-shrink: 0; border: 0; padding: 2px; border-radius: 16px; cursor: pointer; display: flex; transition: background 0.2s; justify-content: ' + (on ? 'flex-end' : 'flex-start') + '; background: ' + (on ? 'var(--accent)' : 'var(--control-fill)'),
@@ -160,19 +196,33 @@ const accents = [['orange', 'set_orange'], ['teal', 'set_teal'], ['lavender', 's
 const natives = { en: 'English', hy: 'Հայերեն', ru: 'Русский' };
 const langs = [['en', 'lang_en'], ['hy', 'lang_hy'], ['ru', 'lang_ru']];
 const skinKeys = { dark: 'set_dark', light: 'set_light', system: 'set_system' };
-return { dnStyle: this.props.variant || 'warm',
+const curStyle = this.props.onStyle ? (this.props.variant || 'warm') : (s.style || this.props.variant || 'warm');
+const styleKeys = { default: 'set_style_warm', warm: 'set_style_warm', lime: 'set_style_lime', aqua: 'set_style_aqua' };
+return { dnStyle: curStyle,
 lang,
-t: { settings: T('common_settings'), done: T('common_done'), doneA11y: T('common_done_a11y'), doneIcon: T('common_done') === '✓', doneText: T('common_done') !== '✓', accent: T('set_accent'), quiet: T('set_quiet'), focusTip: T('set_focus_tip'), focusNote: T('set_focus_note'), endAlert: T('set_end_alert'), notifications: T('set_notifications'), openIos: T('set_open_ios'), general: T('set_general'), appearance: T('set_appearance'), language: T('set_language'), version: T('set_version'), analytics: T('set_analytics'), back: T('common_back_settings'), langNote: T('set_lang_note'), skinNote: T('set_skin_note') },
+t: { settings: T('common_settings'), done: T('common_done'), doneA11y: T('common_done_a11y'), doneIcon: T('common_done') === '✓', doneText: T('common_done') !== '✓', accent: T('set_accent'), quiet: T('set_quiet'), focusTip: T('set_focus_tip'), focusNote: T('set_focus_note'), endAlert: T('set_end_alert'), notifications: T('set_notifications'), openIos: T('set_open_ios'), general: T('set_general'), appearance: T('set_appearance'), language: T('set_language'), version: T('set_version'), analytics: T('set_analytics'), back: T('common_back_settings'), langNote: T('set_lang_note'), skinNote: T('set_skin_note'), style: T('set_style'), styleNote: T('set_style_note') },
 mode: dark ? 'dark' : 'light',
 accentId: curId,
 mainHref: dark ? 'Main.dc.html' : 'MainLight.dc.html',
 nav: (e) => { if (go) { e.preventDefault(); go('main'); } },
+navMain: navBar('main'), navLang: navBar('language'), navSkin: navBar('appearance'), navStyle: navBar('style'),
+scMain: scr('main', 36), scLang: scr('language', 2), scSkin: scr('appearance', 2), scStyle: scr('style', 2),
+navTitleMain: 'position: absolute; left: 60px; right: 60px; text-align: center; font-size: 17px; line-height: 22px; font-weight: 600; pointer-events: none; transition: opacity 0.2s; opacity: ' + ((s.sc && s.sc.main) ? 1 : 0),
 paneMain: pane + 'transform: translateX(' + (pushed ? '-33%' : '0') + '); filter: brightness(' + (pushed ? '0.85' : '1') + ')',
 paneLang: pane + 'transform: translateX(' + (page === 'language' ? '0' : '100%') + ')',
 paneSkin: pane + 'transform: translateX(' + (page === 'appearance' ? '0' : '100%') + ')',
+paneStyle: pane + 'transform: translateX(' + (page === 'style' ? '0' : '100%') + ')',
 mainHidden: pushed ? 'true' : 'false',
 langHidden: page === 'language' ? 'false' : 'true',
 skinHidden: page === 'appearance' ? 'false' : 'true',
+styleHidden: page === 'style' ? 'false' : 'true',
+openStyle: () => this.setState({ page: 'style' }),
+styleName: T(styleKeys[curStyle]),
+styles: [['warm', 'set_style_warm'], ['lime', 'set_style_lime'], ['aqua', 'set_style_aqua']].map(([id, key], i) => ({
+name: T(key), on: curStyle === id,
+pick: () => { this.setState({ style: id }); if (this.props.onStyle) this.props.onStyle(id); clearTimeout(this.popT); this.popT = setTimeout(() => this.setState({ page: 'main' }), 250); },
+row: 'width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; background: transparent; border: 0; padding: 0; cursor: pointer; font-family: inherit; font-size: 17px; line-height: 22px; color: var(--text-primary); text-align: left' + (i > 0 ? '; border-top: 1px solid var(--separator)' : '')
+})),
 openSkin: () => this.setState({ page: 'appearance' }),
 skinName: T(skinKeys[skin]),
 skins: [['dark', 'set_dark'], ['light', 'set_light'], ['system', 'set_system']].map(([id, key], i) => ({

@@ -46,13 +46,13 @@ body{margin:0}
 <div class="{{cls.endEarly}}" style="{{z.endEarly}}"><dc-import variant="{{dnStyle}}" name="End" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" go="{{go}}" early="{{ true }}" purpose="{{choice.purpose}}" mins="{{sessionMins}}" elapsed="{{elapsed}}" hint-size="390px,844px"></dc-import></div>
 </sc-if>
 <sc-if value="{{is.settings}}" hint-placeholder-val="{{ false }}">
-<div class="{{cls.settings}}" style="{{z.settings}}"><dc-import variant="{{dnStyle}}" name="Settings" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" on-lang="{{setLang}}" go="{{go}}" notifications-off="{{notifOff}}" on-accent="{{setAccent}}" skin="{{skin}}" on-skin="{{setSkin}}" hint-size="390px,844px"></dc-import></div>
+<div class="{{cls.settings}}" style="{{z.settings}}"><dc-import variant="{{dnStyle}}" name="Settings" dark="{{dark}}" accent="{{accent}}" lang="{{lang}}" on-lang="{{setLang}}" go="{{go}}" notifications-off="{{notifOff}}" on-accent="{{setAccent}}" on-style="{{setStyle}}" skin="{{skin}}" on-skin="{{setSkin}}" hint-size="390px,844px"></dc-import></div>
 </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["default","warm","lime","aqua"],"default":"warm"},"dark":{"editor":"boolean","default":true},"lang":{"editor":"enum","options":["en","hy","ru"],"default":"en"},"fast":{"editor":"boolean","default":false},"firstStart":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-constructor(p){ super(p); this.state = { screen: 'loading', prev: null, kind: 'root', accent: 'orange', lang: null, skin: (p.dark ?? true) ? 'dark' : 'light', asked: !p.firstStart, choice: { purpose: 'relax', mins: 20, last: { relax: 20, reload: 10, think: 10, coffee: 15, pause: 10 } } }; }
+constructor(p){ super(p); this.state = { screen: 'loading', prev: null, kind: 'root', accent: 'orange', lang: null, skin: (p.dark ?? true) ? 'dark' : 'light', style: null, asked: !p.firstStart, choice: { purpose: 'relax', mins: 20, last: { relax: 20, reload: 10, think: 10, coffee: 15, pause: 10 } } }; }
 componentDidMount(){ this.timer = setTimeout(() => { if (this.state.screen === 'loading') this.move('welcome'); }, 3200); }
 componentWillUnmount(){ clearTimeout(this.timer); clearTimeout(this.moveT); }
 /* Motion (DESIGN.md › Motion): Settings is presented (rises, drops on Done), the notification sheet rises over Start, every root change is a 0.3 s crossfade. */
@@ -76,7 +76,8 @@ is[k] = cur || old || under;
 cls[k] = 'dn-layer' + (cur && s.prev && s.kind === 'present' ? ' dn-rise' : '') + (cur && s.prev && s.kind === 'root' ? ' dn-cross' : '') + (old && s.kind === 'dismiss' ? ' dn-drop' : '');
 z[k] = 'z-index: ' + (old && s.kind === 'dismiss' ? 3 : cur ? 2 : 1);
 });
-return { dnStyle: this.props.variant || 'warm',
+return { dnStyle: s.style || this.props.variant || 'warm',
+setStyle: (id) => this.setState({ style: id }),
 lang: s.lang || this.props.lang || 'en',
 setLang: (id) => this.setState({ lang: id }),
 mode: dark ? 'dark' : 'light',

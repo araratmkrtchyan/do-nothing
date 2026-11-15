@@ -1,4 +1,4 @@
-Do Nothing v5.1 · Warm glass — offline copy
+Do Nothing v5.1 · Warm glass — offline copy, build 5.1.1 (2026-11-15)
 
 Open first: index.html (double-click). It is the whole prototype.
 All screens: Screens.html lists every screen; each one also opens on its own.
