@@ -53,13 +53,14 @@ body{margin:0}
 </button>
 </div>
 </div>
-<p style="position: relative; margin: 0 0 32px 0; font-size: 15px; line-height: 20px; text-align: center; max-width: 290px">{{note}}</p>
-<button onPointerDown="{{holdStart}}" onPointerUp="{{holdStop}}" onPointerLeave="{{holdStop}}" onPointerCancel="{{holdStop}}" onContextMenu="{{noMenu}}" aria-hidden="true" tabindex="-1" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--session-text); font-family: inherit; touch-action: none; user-select: none; -webkit-user-select: none">
-<span style="position: relative; width: 76px; height: 76px; display: flex; align-items: center; justify-content: center">
-<svg width="76" height="76" viewBox="0 0 76 76" style="position: absolute; left: 0; top: 0; transform: rotate(-90deg)"><circle cx="38" cy="38" r="34" fill="none" stroke-width="3" style="stroke: var(--session-control-border)"></circle><circle cx="38" cy="38" r="34" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="{{holdOffset}}" style="stroke: var(--accent)"></circle></svg>
+<p style="position: relative; margin: 0 0 24px 0; font-size: 15px; line-height: 20px; text-align: center; max-width: 290px">{{note}}</p>
+<button onPointerDown="{{holdStart}}" onPointerUp="{{holdStop}}" onPointerLeave="{{holdStop}}" onPointerCancel="{{holdStop}}" onContextMenu="{{noMenu}}" aria-hidden="true" tabindex="-1" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--session-text); font-family: inherit; touch-action: none; user-select: none; -webkit-user-select: none">
+<span style="font-size: 15px; line-height: 20px">{{holdText}}</span>
+<span style="position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position: absolute; left: 0; top: 0; transform: rotate(-90deg)"><circle cx="100" cy="100" r="96" fill="none" stroke-width="4" style="stroke: var(--session-control-border)"></circle><circle cx="100" cy="100" r="96" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="603.2" stroke-dashoffset="{{holdOffset}}" style="stroke: var(--accent)"></circle></svg>
+<span style="position: absolute; width: 76px; height: 76px; border-radius: 9999px; box-sizing: border-box; border: 1px solid var(--session-control-border); background: var(--session-control-background)"></span>
 <span style="{{holdFill}}"></span>
 </span>
-<span style="font-size: 13px; line-height: 18px">{{holdText}}</span>
 </button>
 <button class="sr-only" onClick="{{endNow}}">{{endA11y}}</button>
 </div>
@@ -136,8 +137,8 @@ holdStart: (e) => this.holdStart(e),
 holdStop: () => this.holdStop(),
 noMenu: (e) => { if (e && e.preventDefault) e.preventDefault(); },
 endNow: () => this.finishEarly(),
-holdOffset: String(213.6 * (1 - hp)),
-holdFill: 'width: 60px; height: 60px; border-radius: 9999px; background: var(--accent); transform: scale(' + hp + '); opacity: ' + (hp > 0 ? 1 : 0),
+holdOffset: String(603.2 * (1 - hp)),
+holdFill: 'position: relative; width: 76px; height: 76px; border-radius: 9999px; background: var(--accent); transform: scale(' + hp + '); opacity: ' + (hp > 0 ? 1 : 0),
 holdText: this.state.ended ? T('session_ended') : (hp > 0 ? T('session_holding') : T('session_hold'))
 };
 }
