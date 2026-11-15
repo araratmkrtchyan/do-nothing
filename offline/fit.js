@@ -26,9 +26,9 @@
     if (phone) {
       s = w / 390;
       // Insets in design pixels. Home Screen: the real status bar and home indicator. Browser tab: nothing on top
-      // (Safari's own bar is above the page), and Safari 26+'s floating tab bar at the bottom (about 76 pt incl. the home indicator).
+      // (Safari's own bar is above the page) and only the reported bottom inset; the window already stops above the tab bar.
       var topIn = standalone ? ins.top : 0;
-      var botIn = standalone ? ins.bottom : (safariMajor() >= 26 ? Math.max(ins.bottom, 76) : ins.bottom);
+      var botIn = ins.bottom;   // Safari's window already ends above its tab bar: reserving more left an empty band under the button
       d.style.setProperty('--dn-inset-top', (topIn / s) + 'px');
       d.style.setProperty('--dn-inset-bottom', (botIn / s) + 'px');
       d.style.setProperty('--dn-bottom-base', (standalone ? 8 : 16) + 'px');
@@ -36,10 +36,15 @@
       d.style.setProperty('--dn-h', sh + 'px');            // try the window's own height first
       var need = 0, screens = root.querySelectorAll('.dn');
       for (var i = 0; i < screens.length; i++) {
-        var el = screens[i], top = el.getBoundingClientRect().top, kids = el.children, end = 0;
-        for (var j = 0; j < kids.length; j++) { var kr = kids[j].getBoundingClientRect(); if (kr.height) end = Math.max(end, kr.bottom); }
-        // content height in design px, plus the bottom padding (Safari's bar / home indicator); scrollHeight misses that padding
-        need = Math.max(need, el.scrollHeight, Math.ceil((end - top) / s + (parseFloat(getComputedStyle(el).paddingBottom) || 0)));
+        // Layout sizes (offsetTop/offsetHeight) ignore animations and transforms, so a breathing or moving element never
+        // changes the height; floating layers (absolute/fixed) are skipped. scrollHeight misses the bottom padding.
+        var el = screens[i], kids = el.children, end = 0;
+        for (var j = 0; j < kids.length; j++) {
+          var k = kids[j], pos = getComputedStyle(k).position;
+          if (pos === 'absolute' || pos === 'fixed' || !k.offsetHeight) continue;
+          end = Math.max(end, k.offsetTop - (k.offsetParent === el ? 0 : el.offsetTop) + k.offsetHeight);
+        }
+        need = Math.max(need, Math.ceil(end + (parseFloat(getComputedStyle(el).paddingBottom) || 0)));
       }
       if (need > sh + 8) sh = need;                          // content that cannot shrink: grow just enough
     } else { s = Math.min(w / 390, h / 844, 2); sh = 844; }
